@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Lista de Tarefas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        #app {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Minha Lista de Tarefas</h1>
+        
+        <div>
+            <input type="text" v-model="novaTarefa" @keyup.enter="adicionarTarefa" placeholder="Adicionar uma nova tarefa">
+            <button @click="adicionarTarefa">Adicionar</button>
+        </div>
+        
+        <ul>
+            <li v-for="(tarefa, index) in tarefas" :key="index">
+                <input type="checkbox" v-model="tarefa.concluida">
+                {{ tarefa.texto }}
+                <button @click="removerTarefa(index)">Excluir</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                novaTarefa: '',
+                tarefas: []
+            },
+            methods: {
+                adicionarTarefa() {
+                    if (this.novaTarefa.trim() !== '') {
+                        this.tarefas.push({ texto: this.novaTarefa, concluida: false });
+                        this.novaTarefa = '';
+                    }
+                },
+                removerTarefa(index) {
+                    this.tarefas.splice(index, 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
